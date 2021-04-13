@@ -14,7 +14,7 @@ var windEl = document.createElement("div");
 var uvIndexContainer = document.createElement("div");
 var uvIndexEl = document.createElement("div");
 var uvValueDisplay = document.createElement("div");
-var forecastEl = document.createElement("div")
+var forecastElement = document.createElement("div")
 
 
 function fetchWeather() {
@@ -24,7 +24,7 @@ function fetchWeather() {
     fetch(weatherApi)
         .then(function (response) {
             if (!response || !response.ok) {
-                throw new Error('There was an error');
+                throw new Error('There was an error with OpenWeather Api');
             };
             return response.json();
         })
@@ -39,7 +39,7 @@ function fetchWeather() {
 
             cityNameEl.innerHTML = "<p class='city-title'><span>" + response.name + " "
                 + "(" + currentDate + ")"
-                + "<img class='current-icon' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/"+ response.weather[0].icon
+                + "<img class='current-icon' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/" + response.weather[0].icon
                 + ".svg' alt=Current weather icon/></p>";
             cityTempDiv.appendChild(cityNameEl);
 
@@ -52,11 +52,11 @@ function fetchWeather() {
             windEl.innerHTML = "<p>Wind Speed:<span>" + " " + Math.round(response.wind.speed) + " KM/H</span></p>";
             cityDetailsDiv.appendChild(windEl);
 
-            var uviAPI = "https://api.openweathermap.org/data/2.5/onecall?appid=c83c5006fffeb4aa44a34ffd6a27f135&lat=" + response.coord.lat + "&lon=" + response.coord.lon;
+            var uviAPI = "https://api.openweathermap.org/data/2.5/onecall?appid=c83c5006fffeb4aa44a34ffd6a27f135&lat=" + response.coord.lat + "&lon=" + response.coord.lon+"&units=metric&appid="+apiKey;
             fetch(uviAPI)
                 .then(function (uviResponse) {
                     if (!uviResponse || !uviResponse.ok) {
-                        throw new Error('There was an error');
+                        throw new Error('There was an error with OneCall Api');
                     };
                     return uviResponse.json();
                 })
@@ -74,53 +74,44 @@ function fetchWeather() {
                     } else if (uvValue < 3) {
                         uvIndexEl.innerHTML = "UV Index: " + "<a style='background-color: green; padding: 10px;'>" + uvValue + "</a>";
                     }
-                    return fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + uviResponse.lat + "&lon=" + uviResponse.lon + "&appid=c83c5006fffeb4aa44a34ffd6a27f135&units=metric");
-                })
-                .then(function (forecastResponse) {
-                    return forecastResponse.json();
-                })
-                .then(function (forecastResponse) {
-
-                    var forecastHeadingEl = document.getElementById("forecast-heading")
-                    forecastHeadingEl.innerHTML = "5-Day Forecast:"
 
                     for (var i = 1; i < 6; i++) {
-                        var forecastEl = document.createElement("div");
-                        forecastEl.classList = "forecast-card";
-                        forecastContainer.appendChild(forecastEl);
+                        var forecastElement = document.createElement("div");
+                        forecastElement.classList = "forecast-card";
+                        forecastContainer.appendChild(forecastElement);
 
                         var dateDiv = document.createElement("div");
                         dateDiv.classList = "card-title";
-                        var forecastDate = moment(forecastResponse.daily[i].dt * 1000).format("DD/MM/YYYY");
+                        var forecastDate = moment(uviResponse.daily[i].dt * 1000).format("DD/MM/YYYY");
                         dateDiv.innerHTML = "<p>" + forecastDate + "</p>";
-                        forecastEl.appendChild(dateDiv);
+                        forecastElement.appendChild(dateDiv);
 
                         var iconDiv = document.createElement("div");
-                        iconDiv.innerHTML = "<img class='forecast-icon' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/" + forecastResponse.daily[i].weather[0].icon + ".svg' class='forecast-icon' alt=Current weather icon/>";
-                        forecastEl.appendChild(iconDiv);
+                        iconDiv.innerHTML = "<img class='forecast-icon' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/" + uviResponse.daily[i].weather[0].icon + ".svg' class='forecast-icon' alt=Current weather icon/>";
+                        forecastElement.appendChild(iconDiv);
 
                         var tempDiv = document.createElement("div");
                         tempDiv.classList = "card-text";
-                        tempDiv.innerHTML = "<p>Temp:<span>" + " " + Math.round(forecastResponse.daily[i].temp.day) + "&#176C</span></p>";
-                        forecastEl.appendChild(tempDiv);
+                        tempDiv.innerHTML = "<p>Temp:<span>" + " " + Math.round(uviResponse.daily[i].temp.day) + "&#176C</span></p>";
+                        forecastElement.appendChild(tempDiv);
 
                         var speedDiv = document.createElement("div");
                         speedDiv.classList = "card-text";
-                        speedDiv.innerHTML = "<p>Wind:<span>" + " " + forecastResponse.daily[i].wind_speed + " KM/H</span></p>";
-                        forecastEl.appendChild(speedDiv);
+                        speedDiv.innerHTML = "<p>Wind:<span>" + " " + Math.round(uviResponse.daily[i].wind_speed) + " KM/H</span></p>";
+                        forecastElement.appendChild(speedDiv);
 
                         var humidDiv = document.createElement("div");
                         humidDiv.classList = "card-text";
-                        humidDiv.innerHTML = "<p>Humidity:<span>" + " " + forecastResponse.daily[i].humidity + "%</span></p>";
-                        forecastEl.appendChild(humidDiv);
+                        humidDiv.innerHTML = "<p>Humidity:<span>" + " " + uviResponse.daily[i].humidity + "%</span></p>";
+                        forecastElement.appendChild(humidDiv);
                     }
                 })
-                .catch(function (error) {
-                    alert(error.message);
-                    document.getElementById("search-bar").value = "";
-                    return;
-                });
         })
+        .catch(function (error) {
+            alert(error.message);
+            document.getElementById("search-bar").value = "";
+            return;
+        });
 };
 
 //function to create the list of weather searches
@@ -129,7 +120,16 @@ function createSearchList() {
     citySearch.innerHTML = city.value.trim().toUpperCase();
     citySearch.classList = "search-results";
     searchHistoryContainer.prepend(citySearch);
+    console.log(citySearch.innerHTML)
 };
+
+function searchHistoryClick() {
+    var searchCity = document.querySelectorAll('.search-results');
+    Array.from(searchCity).forEach(paragraph => {
+        searchInput.value = '';
+        paragraph.addEventListener('click', searchWithHistory);
+    })
+}
 
 //function to store the city name in local storage
 function storeSearchHistory() {
@@ -147,25 +147,30 @@ function storeSearchHistory() {
 function removePreviousCity() {
     cityNameEl.remove();
     uvIndexContainer.remove();
+    forecastContainer.innerHTML = "";
     currentTempEl.remove();
     humidityEl.remove();
     windEl.remove();
-    forecastContainer.remove()
-}
+};
 
 
 document.getElementById("delete").addEventListener('click', function (event) {
-    event.preventDefault();
+    removePreviousCity();
     searchHistoryContainer.remove();
     localStorage.clear("searchedCities");
-    removePreviousCity();
     location.reload();
 });
 
 
 document.getElementById("search").addEventListener('click', function (event) {
-    event.preventDefault();
-    fetchWeather();
-    createSearchList();
-    storeSearchHistory();
+    if (!city.value) {
+        alert("Please enter a city name")
+    } else {
+        removePreviousCity()
+        fetchWeather();
+        createSearchList();
+        storeSearchHistory();
+    }
 });
+
+searchHistoryClick()
