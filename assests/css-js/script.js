@@ -120,7 +120,6 @@ function createSearchList() {
     citySearch.innerHTML = city.value.trim().toUpperCase();
     citySearch.classList = "search-results";
     searchHistoryContainer.prepend(citySearch);
-    console.log(citySearch.innerHTML)
 };
 
 function searchHistoryClick() {
