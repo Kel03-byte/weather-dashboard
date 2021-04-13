@@ -39,8 +39,8 @@ function fetchWeather() {
 
             cityNameEl.innerHTML = "<p class='city-title'><span>" + response.name + " "
                 + "(" + currentDate + ")"
-                + "<img class='current-icon' src='http://openweathermap.org/img/w/" + response.weather[0].icon
-                + ".png' alt=Current weather icon/></p>";
+                + "<img class='current-icon' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/"+ response.weather[0].icon
+                + ".svg' alt=Current weather icon/></p>";
             cityTempDiv.appendChild(cityNameEl);
 
             currentTempEl.innerHTML = "<p>Temp:<span>" + " " + Math.round(response.main.temp) + "&#176C</span></p>";
@@ -96,7 +96,7 @@ function fetchWeather() {
                         forecastEl.appendChild(dateDiv);
 
                         var iconDiv = document.createElement("div");
-                        iconDiv.innerHTML = "<img class='forecast-icon' src='http://openweathermap.org/img/w/" + forecastResponse.daily[i].weather[0].icon + ".png' class='forecast-icon' alt=Current weather icon/>";
+                        iconDiv.innerHTML = "<img class='forecast-icon' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/" + forecastResponse.daily[i].weather[0].icon + ".svg' class='forecast-icon' alt=Current weather icon/>";
                         forecastEl.appendChild(iconDiv);
 
                         var tempDiv = document.createElement("div");

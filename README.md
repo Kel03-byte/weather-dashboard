@@ -11,5 +11,5 @@ SO THAT I can plan a trip accordingly
 ```
 
 * github: https://github.com/Kel03-byte/weather-dashboard
-* deployed website:
+* deployed website: https://kel03-byte.github.io/weather-dashboard/
 * screenshots of the deployed website:
