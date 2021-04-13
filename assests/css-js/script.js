@@ -122,14 +122,6 @@ function createSearchList() {
     searchHistoryContainer.prepend(citySearch);
 };
 
-function searchHistoryClick() {
-    var searchCity = document.querySelectorAll('.search-results');
-    Array.from(searchCity).forEach(paragraph => {
-        searchInput.value = '';
-        paragraph.addEventListener('click', searchWithHistory);
-    })
-}
-
 //function to store the city name in local storage
 function storeSearchHistory() {
     var userSearch = city.value.trim().toUpperCase();
