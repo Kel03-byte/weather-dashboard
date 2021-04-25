@@ -1,14 +1,6 @@
-# weather-dashboard
+# Weather Forecast Dashboard
 
-I was tasked in creating a website to display the current weather and 5 day forecast for any city the user searches.
-
-## User Story
-
-```
-AS A traveler
-I WANT to see the weather outlook for multiple cities
-SO THAT I can plan a trip accordingly
-```
+A simple weather forecast site in which the user can search any city to get update weather information and the forecast for the following five days!
 
 * github: https://github.com/Kel03-byte/weather-dashboard
 * deployed website: https://kel03-byte.github.io/weather-dashboard/
