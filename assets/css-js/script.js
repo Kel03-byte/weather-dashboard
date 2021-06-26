@@ -71,13 +71,13 @@ function fetchWeather() {
                     uvIndexContainer.appendChild(uvIndexEl);
                     uvIndexContainer.appendChild(uvValueDisplay);
                     if (uvValue > 8) {
-                        uvIndexEl.innerHTML = "UV Index: " + "<a style='background-color: red; padding: 10px;'>" + uvValue + "</a>";
+                        uvIndexEl.innerHTML = "UV Index: " + "<a class='danger'>" + uvValue + "</a>";
                     } else if (uvValue >= 5 && uvValue <= 8) {
-                        uvIndexEl.innerHTML = "UV Index: " + "<a style='background-color: orange; padding: 10px;'>" + uvValue + "</a>";
+                        uvIndexEl.innerHTML = "UV Index: " + "<a class='warning'>" + uvValue + "</a>";
                     } else if (uvValue >= 3 && uvValue <= 5) {
-                        uvIndexEl.innerHTML = "UV Index: " + "<a style='background-color: yellow; padding: 10px;'>" + uvValue + "</a>";
+                        uvIndexEl.innerHTML = "UV Index: " + "<a class='moderate'>" + uvValue + "</a>";
                     } else if (uvValue < 3) {
-                        uvIndexEl.innerHTML = "UV Index: " + "<a style='background-color: green; padding: 10px;'>" + uvValue + "</a>";
+                        uvIndexEl.innerHTML = "UV Index: " + "<a class='low'>" + uvValue + "</a>";
                     }
 
                     //Builds and displays the 5-Day forecast

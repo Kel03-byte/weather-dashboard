@@ -6,6 +6,10 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
+    background-image: url(../images/background.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
 }
 
 header {
@@ -70,6 +74,7 @@ header {
     position: absolute;
     left: 250px;
     top: 80px;
+    background-color: white;
 }
 
 .city-title {
@@ -121,4 +126,37 @@ header {
 #forecast-heading {
     font-weight: bold;
     font-size: 20px;
+}
+
+
+.danger {
+    background-color: rgb(245, 47, 47);
+    border-radius: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+}
+  
+.warning {
+    background-color: rgb(248, 143, 24);
+    border-radius: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+}
+  
+.moderate {
+    background-color: rgb(246, 196, 56);
+    border-radius: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+}
+  
+.low {
+    background-color: rgb(47, 245, 47);
+    border-radius: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
 }
